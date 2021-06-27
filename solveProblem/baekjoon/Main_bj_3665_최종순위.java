@@ -43,15 +43,15 @@ public class Main_bj_3665_최종순위 {
             }
 
             Queue<Integer> q = new LinkedList<>();
-            int[] entryLevel = new int[n + 1];
+            int[] indegree = new int[n + 1];
             for (int i = 1; i < graph.length; i++) {
                 for (int j = 1; j < graph[i].length; j++) {
-                    if(graph[i][j])  entryLevel[i]++;
+                    if(graph[i][j])  indegree[i]++;
                 }
             }
 
-            for (int i = 1; i < entryLevel.length; i++) {
-                if(entryLevel[i] == 0) q.offer(i);
+            for (int i = 1; i < indegree.length; i++) {
+                if(indegree[i] == 0) q.offer(i);
             }
 
             StringBuilder sb = new StringBuilder();
@@ -72,7 +72,7 @@ public class Main_bj_3665_최종순위 {
                 sb.append(team).append(' ');
 
                 for (int i = 1; i < graph.length; i++) {
-                    if(graph[i][team] && entryLevel[i] == cnt) q.offer(i);
+                    if(graph[i][team] && indegree[i] == cnt) q.offer(i);
                 }
             }
             System.out.println(sb.toString());
