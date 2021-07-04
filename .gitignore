@@ -131,3 +131,7 @@ fabric.properties
 hs_err_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij
+solveProblem/fail/*
+studyAlgorithm/src/*
+solveProblem/20210619-DH-CodingTest/*
+solveProblem/src/*
