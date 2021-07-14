@@ -92,10 +92,9 @@ public class Main_bj_18223_민준이와마산그리고건우_2 {
             }
 
             if(visited[current.vertex]) continue;
-            for (Node next : adj[current.vertex]) {
-                pq.offer(new Node(next.vertex, current.weight + next.weight, current.save));
-                visited[current.vertex] = true;
-            }
+            for (Node next : adj[current.vertex]) pq.offer(new Node(next.vertex, current.weight + next.weight, current.save));
+            visited[current.vertex] = true;
+
         }
 
     }
