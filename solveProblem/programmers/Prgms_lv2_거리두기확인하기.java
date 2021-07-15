@@ -70,9 +70,5 @@ public class Prgms_lv2_거리두기확인하기 {
                 return false;
             }
         }
-
-        private boolean isRange(int y, int x, int n, int m) {
-            return (y >= 0)&&(y < n)&&(x >= 0)&&(x < m);
-        }
     }
 }
