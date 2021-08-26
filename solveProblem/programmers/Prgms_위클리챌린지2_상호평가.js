@@ -7,16 +7,16 @@ function solution(scores) {
   score >= 50 ? 'D' :
   'F';
 
-  const transpose = matrix => matrix.reduce((result, row) => row.map((_, i) => [...(result[i]|| []), row[i]]), []);
-  
-  const answer = transpose(scores).reduce((result, row, i)=>{
+  const transpose = matrix => matrix.reduce((result, row) => row.map((e, i) => [...(result[i] || []), e]),[]);
+
+  const answer = transpose(scores).reduce((result, row, i) => {
     
     const onlyMaxFromMe = () => (row[i] == max) && (row.filter(v => v == max).length == 1);
     const onlyMinFromMe = () => (row[i] == min) && (row.filter(v => v == min).length == 1);
     
     const max = Math.max(...row);
     const min = Math.min(...row);
-    const sum = row.reduce((acc,v)=>acc+=v,0);
+    const sum = row.reduce((acc,v)=>acc+v,0);
     const avg = 
       onlyMaxFromMe() ? (sum - max) / (row.length-1) :
       onlyMinFromMe() ? (sum - min) / (row.length-1) : 
