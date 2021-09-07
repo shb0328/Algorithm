@@ -1,10 +1,9 @@
 function solution(weights, head2head) {
   
-  const compare = (b1, b2) => 
-    b1.winRate != b2.winRate ? b2.winRate - b1.winRate
-    : b1.expensiveWin != b2.expensiveWin ? b2.expensiveWin - b1.expensiveWin
-    : b1.weight != b2.weight ? b2.weight - b1.weight
-    : b1.index - b2.index
+  const compare = (b1, b2) => b2.winRate - b1.winRate
+    || b2.expensiveWin - b1.expensiveWin
+    || b2.weight - b1.weight
+    || b1.index - b2.index
   ; 
   
   const boxer = head2head.map((v, me) => {
