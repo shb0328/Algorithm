@@ -6,16 +6,18 @@ function solution(game_board, table) {
   const visited_table = table.map(v=>v.map(vv=>false));
   const visited_game_board = game_board.map(v=>v.map(vv=>false));
 
-  const pieces = getPieces(table, visited_table);
-  const blanks = getBlanks(game_board, visited_game_board);
+  const listOfPieces = getListOfPuzzles(table, visited_table, 1);
+  const listOfBlanks = getListOfPuzzles(game_board, visited_game_board, 0);
 
-  answer = blanks.reduce((acc, blank) => {
-    const size = blank[0].size;
-    const piecesOfSameSize = pieces[size];
-    for(let i = 0; i < piecesOfSameSize.length; ++i) {
-      if(!isSamePuzzle(piecesOfSameSize[i], blank)) continue;
-      piecesOfSameSize.splice(i,1);
-      return acc + size;
+  answer = listOfBlanks.reduce((acc, blanks, size) => {
+    const pieces = listOfPieces[size];
+    for(let j = 0; j < blanks.length; ++j){
+      for(let i = 0; i < pieces.length; ++i) {
+        if(!isSamePuzzle(pieces[i], blanks[j])) continue;
+        pieces.splice(i,1);
+        acc += size;
+        break;
+      }
     }
     return acc;
   }, 0);
@@ -36,7 +38,7 @@ const isSamePuzzle = (piece, blank) => {
     return acc;
   }
   ,0);
-  return (cnt == blank.length);
+  return cnt == blank.length;
 }
   
 const rotatePiece = piece => {
@@ -48,15 +50,15 @@ const rotatePiece = piece => {
   }
 }
 
-const getPieces = (table, visited_table) => {
-  const pieces = [0,[],[],[],[],[],[]];
-  for(let i = 0; i < table.length; ++i) {
-    for(let j = 0; j < table.length; ++j) {
-      if(visited_table[i][j]) continue;
-      visited_table[i][j] = true;
-      if(table[i][j] != 1) continue;
-      const piece = getPuzzle([j,i], table, visited_table, 1);
-      pieces[piece.length].push( 
+const getListOfPuzzles = (board, visited, value) => {
+  const list = [0,[],[],[],[],[],[]];
+  for(let i = 0; i < board.length; ++i) {
+    for(let j = 0; j < board.length; ++j) {
+      if(visited[i][j]) continue;
+      visited[i][j] = true;
+      if(board[i][j] != value) continue;
+      const piece = getPuzzle([j,i], board, visited, value);
+      list[piece.length].push( 
         piece.map(pos => { 
           return {
             'up' : piece.filter(v => v[1] < pos[1]).length,
@@ -68,31 +70,7 @@ const getPieces = (table, visited_table) => {
       );
     }
   }
-  return pieces;
-}
-
-const getBlanks = (game_board, visited_game_board) => {
-  const blanks = [];
-  for(let i = 0; i < game_board.length; ++i) {
-    for(let j = 0; j < game_board.length; ++j) {
-      if(visited_game_board[i][j]) continue;
-      visited_game_board[i][j] = true;
-      if(game_board[i][j] != 0) continue;
-      const blank = getPuzzle([j,i], game_board, visited_game_board, 0);
-      blanks.push( 
-        blank.map(pos => { 
-          return {
-            'up' : blank.filter(v => v[1] < pos[1]).length,
-            'down' : blank.filter(v => v[1] > pos[1]).length,
-            'right' : blank.filter(v => v[0] > pos[0]).length,
-            'left' : blank.filter(v => v[0] < pos[0]).length,
-            'size' : blank.length
-          }
-        })
-      );
-    }
-  }
-  return blanks;
+  return list;
 }
 
 const getPuzzle = (start, board, visited, value) => {
@@ -158,5 +136,3 @@ const table =
 
 const result = solution(game_board, table);
 console.log(result); //54
-
-
