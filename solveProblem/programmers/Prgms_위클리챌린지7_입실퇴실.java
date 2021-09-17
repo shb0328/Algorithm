@@ -32,7 +32,7 @@ class Solution {
                     meet[idxOfOne][idxOfAnother] = meet[idxOfAnother][idxOfOne] = true;
                     for(int idxOfBetween = one[ENTER]+1; idxOfBetween < another[ENTER]; ++idxOfBetween) {
                         int between = enter[idxOfBetween];
-                        if(one[LEAVE] < info[between][LEAVE]) meet[idxOfOne][between] = meet[between][idxOfOne] = true;
+                        meet[idxOfOne][between] = meet[between][idxOfOne] = true;
                     }
                 }
             }
